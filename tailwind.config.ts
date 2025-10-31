@@ -47,6 +47,11 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        expert: "hsl(var(--expert))",
+        advanced: "hsl(var(--advanced))",
+        core: "hsl(var(--core))",
+        specialist: "hsl(var(--specialist))",
+        supporting: "hsl(var(--supporting))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
