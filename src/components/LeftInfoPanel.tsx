@@ -9,87 +9,24 @@ interface LeftInfoPanelProps {
   } | null;
 }
 
+import { radialSections } from "@/data/portfolioData";
+
 const sectionData: Record<string, {
   title: string;
   category: string;
   overview: string;
   details: string[];
 }> = {
-  ta: {
-    title: "Test Analyst (TA)",
-    category: "CORE",
-    overview: "The Test Analyst certification focuses on the technical aspects of testing, including test design techniques and test analysis.",
-    details: [
-      "Advanced test design techniques",
-      "Risk-based testing approaches",
-      "Defect taxonomies and analysis",
-      "Test data preparation"
-    ]
-  },
-  tm: {
-    title: "Test Manager (TM)",
-    category: "CORE",
-    overview: "The Test Manager certification covers test management, test process improvement, and people skills required for effective test management.",
-    details: [
-      "Test planning and estimation",
-      "Risk management strategies",
-      "Team leadership and communication",
-      "Test metrics and reporting"
-    ]
-  },
-  tta: {
-    title: "Technical Test Analyst (TTA)",
-    category: "ADVANCED",
-    overview: "The Technical Test Analyst certification provides advanced knowledge in technical testing aspects.",
-    details: [
-      "White-box testing techniques",
-      "Static and dynamic analysis",
-      "Security and performance testing",
-      "Technical test automation"
-    ]
-  },
-  ttae: {
-    title: "Test Technical Analyst Expert (TTAE)",
-    category: "ADVANCED",
-    overview: "Expert-level technical testing covering advanced automation and architecture.",
-    details: [
-      "Test architecture design",
-      "Advanced automation frameworks",
-      "Performance optimization",
-      "DevOps integration"
-    ]
-  },
-  game: {
-    title: "Game Testing",
-    category: "SPECIALIST",
-    overview: "Specialized certification for testing video games and interactive entertainment software.",
-    details: [
-      "Game mechanics testing",
-      "Platform-specific testing",
-      "User experience validation",
-      "Performance in gaming environments"
-    ]
-  },
-  aut: {
-    title: "Automotive Software Testing",
-    category: "SPECIALIST",
-    overview: "Specialized knowledge for testing automotive software systems and embedded systems.",
-    details: [
-      "Safety-critical systems",
-      "AUTOSAR compliance",
-      "Embedded systems testing",
-      "ISO 26262 standards"
-    ]
-  },
+  ...radialSections,
   default: {
-    title: "Portfolio Overview",
-    category: "GENERAL",
-    overview: "Explore the comprehensive testing certifications and specializations available in the ISTQB framework.",
+    title: "Visão Geral do Portfolio",
+    category: "GERAL",
+    overview: "Explore as certificações de teste e especializações disponíveis no framework ISTQB, alinhadas com meus objetivos profissionais.",
     details: [
-      "Multiple certification levels available",
-      "Industry-recognized standards",
-      "Global testing community",
-      "Continuous professional development"
+      "Múltiplos níveis de certificação disponíveis",
+      "Padrões reconhecidos pela indústria",
+      "Comunidade global de testes",
+      "Desenvolvimento profissional contínuo"
     ]
   }
 };

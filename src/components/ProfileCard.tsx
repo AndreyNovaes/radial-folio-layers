@@ -6,10 +6,13 @@ interface ProfileCardProps {
   title: string;
   bio: string;
   skills: string[];
+  email?: string;
+  linkedin?: string;
+  github?: string;
   imageUrl?: string;
 }
 
-export const ProfileCard = ({ name, title, bio, skills, imageUrl }: ProfileCardProps) => {
+export const ProfileCard = ({ name, title, bio, skills, email, linkedin, github, imageUrl }: ProfileCardProps) => {
   return (
     <Card className="p-6 bg-gradient-to-br from-card to-muted/30 shadow-lg">
       <div className="flex flex-col items-center space-y-4">
@@ -43,10 +46,10 @@ export const ProfileCard = ({ name, title, bio, skills, imageUrl }: ProfileCardP
           {bio}
         </p>
 
-        {/* Skills/Motivations */}
+        {/* Skills */}
         <div className="w-full space-y-2">
           <h3 className="text-xs font-semibold text-muted-foreground uppercase text-center">
-            Key Skills
+            Principais Habilidades
           </h3>
           <div className="flex flex-wrap gap-2 justify-center">
             {skills.map((skill, index) => (
@@ -60,6 +63,43 @@ export const ProfileCard = ({ name, title, bio, skills, imageUrl }: ProfileCardP
             ))}
           </div>
         </div>
+
+        {/* Contact Links */}
+        {(email || linkedin || github) && (
+          <div className="w-full pt-4 border-t border-border space-y-2">
+            {email && (
+              <a 
+                href={`mailto:${email}`}
+                className="flex items-center justify-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+              >
+                <span>📧</span>
+                <span>{email}</span>
+              </a>
+            )}
+            {linkedin && (
+              <a 
+                href={`https://${linkedin}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+              >
+                <span>💼</span>
+                <span>LinkedIn</span>
+              </a>
+            )}
+            {github && (
+              <a 
+                href={`https://${github}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+              >
+                <span>💻</span>
+                <span>GitHub</span>
+              </a>
+            )}
+          </div>
+        )}
       </div>
     </Card>
   );

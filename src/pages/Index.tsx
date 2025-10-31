@@ -2,6 +2,9 @@ import { useState } from "react";
 import { RadialMenu } from "@/components/RadialMenu";
 import { LeftInfoPanel } from "@/components/LeftInfoPanel";
 import { ProfileCard } from "@/components/ProfileCard";
+import { Timeline } from "@/components/Timeline";
+import { CertificationsGoals } from "@/components/CertificationsGoals";
+import { profileData, timeline, certifications } from "@/data/portfolioData";
 
 const Index = () => {
   const [selectedSection, setSelectedSection] = useState<{
@@ -21,8 +24,8 @@ const Index = () => {
                 <span className="text-2xl font-bold text-primary-foreground">P</span>
               </div>
               <div>
-                <h1 className="text-xl font-bold text-foreground">Professional Portfolio</h1>
-                <p className="text-xs text-muted-foreground">ISTQB® Persona: Mateo</p>
+                <h1 className="text-xl font-bold text-foreground">Portfolio Profissional</h1>
+                <p className="text-xs text-muted-foreground">{profileData.name} - {profileData.title}</p>
               </div>
             </div>
             <button className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium">
@@ -51,31 +54,39 @@ const Index = () => {
           {/* Right Panel - Profile */}
           <div className="lg:col-span-3">
             <ProfileCard
-              name="Mateo"
-              title="Software Product Manager"
-              bio="Mateo has studied computer science and has been programming since then. Starting as a simple programmer he is now responsible for the entire software product lifecycle. He has always been to build quality systems, but he also wants to be fast on the market and make money."
-              skills={[
-                "Build Quality In",
-                "Leadership",
-                "DevOps",
-                "Agile",
-                "Test Strategy"
-              ]}
+              name={profileData.name}
+              title={profileData.title}
+              bio={profileData.bio}
+              skills={profileData.skills}
+              email={profileData.email}
+              linkedin={profileData.linkedin}
+              github={profileData.github}
+              imageUrl={profileData.imageUrl}
             />
           </div>
         </div>
 
-        {/* Additional Info Section */}
-        <div className="mt-8 p-6 bg-card rounded-lg shadow-md border border-border">
+        {/* Timeline Section */}
+        <div className="mt-12">
+          <Timeline items={timeline} />
+        </div>
+
+        {/* Certifications & Goals */}
+        <div className="mt-12">
+          <CertificationsGoals certifications={certifications} />
+        </div>
+
+        {/* About Section */}
+        <div className="mt-12 p-6 bg-card rounded-lg shadow-md border border-border">
           <h2 className="text-lg font-semibold text-foreground mb-3">
-            About This Portfolio
+            Sobre Este Portfolio
           </h2>
           <p className="text-muted-foreground leading-relaxed">
-            This interactive portfolio showcases the ISTQB certification framework through an 
-            innovative radial visualization. Click on any certification level to explore detailed 
-            information about the specific testing specialization, requirements, and career paths. 
-            The framework represents comprehensive testing knowledge from foundational concepts 
-            through expert-level specializations.
+            Este portfolio interativo apresenta o framework de certificações ISTQB através de uma 
+            visualização radial inovadora. Clique em qualquer nível de certificação para explorar 
+            informações detalhadas sobre especializações, requisitos e caminhos de carreira em testes. 
+            O framework representa conhecimento abrangente em testes, desde conceitos fundamentais 
+            até especializações de nível expert.
           </p>
         </div>
       </main>
