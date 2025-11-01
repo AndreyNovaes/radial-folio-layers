@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { RadialMenu } from "@/components/RadialMenu";
+import { SkillsEvolutionRadar } from "@/components/SkillsEvolutionRadar";
 import { LeftInfoPanel } from "@/components/LeftInfoPanel";
 import { HeroSection } from "@/components/HeroSection";
 import { Timeline } from "@/components/Timeline";
 import { CertificationsGoals } from "@/components/CertificationsGoals";
+import { MyStory } from "@/components/MyStory";
 import { profileData, timeline, certifications } from "@/data/portfolioData";
 
 const Index = () => {
@@ -29,25 +30,21 @@ const Index = () => {
 
       {/* Main Content */}
       <main className="container mx-auto px-6 py-12">
-        {/* Portfolio Overview Section */}
+        {/* My Story Section */}
+        <MyStory />
+
+        {/* Skills Evolution Section */}
         <section className="mb-16">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-foreground mb-3">Visão Geral do Portfolio</h2>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-foreground mb-3">Evolução de Competências</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Explore minhas habilidades técnicas através do gráfico de radar interativo e descubra mais sobre minhas certificações e experiências profissionais.
+              Da fundação em 2024 ao presente em 2025, visualize minha jornada de crescimento contínuo.
+              Compare hard skills técnicas e soft skills comportamentais ao longo do tempo.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            {/* Left Panel - Info */}
-            <div className="lg:col-span-3">
-              <LeftInfoPanel selectedSection={selectedSection} />
-            </div>
-
-            {/* Center - Skills Radar */}
-            <div className="lg:col-span-9 flex items-center justify-center">
-              <RadialMenu />
-            </div>
+          <div className="flex justify-center">
+            <SkillsEvolutionRadar />
           </div>
         </section>
 
@@ -57,22 +54,8 @@ const Index = () => {
         </div>
 
         {/* Certifications & Goals */}
-        <div className="mt-12">
+        <div className="mt-16">
           <CertificationsGoals certifications={certifications} />
-        </div>
-
-        {/* About Section */}
-        <div className="mt-12 p-6 bg-card rounded-lg shadow-md border border-border">
-          <h2 className="text-lg font-semibold text-foreground mb-3">
-            Sobre Este Portfolio
-          </h2>
-          <p className="text-muted-foreground leading-relaxed">
-            Este portfolio interativo apresenta o framework de certificações ISTQB através de uma 
-            visualização radial inovadora. Clique em qualquer nível de certificação para explorar 
-            informações detalhadas sobre especializações, requisitos e caminhos de carreira em testes. 
-            O framework representa conhecimento abrangente em testes, desde conceitos fundamentais 
-            até especializações de nível expert.
-          </p>
         </div>
       </main>
     </div>
