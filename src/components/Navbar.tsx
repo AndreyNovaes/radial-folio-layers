@@ -10,9 +10,9 @@ export const Navbar = () => {
   const links = [
     { label: "Sobre", href: "#sobre" },
     { label: "Competências", href: "#competencias" },
+    { label: "Trajetória", href: "#trajetoria" },
     { label: "Projetos", href: "#projetos" },
     { label: "Artigos", href: "#artigos" },
-    { label: "Trajetória", href: "#trajetoria" },
     { label: "Contato", href: "#contato" },
   ];
 
