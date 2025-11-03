@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Certification } from "@/data/portfolioData";
-import { CheckCircle2, Clock, Target } from "lucide-react";
+import { CheckCircle2, Clock, Target, Calendar } from "lucide-react";
 
 interface CertificationsGoalsProps {
   certifications: Certification[];
@@ -30,9 +30,8 @@ const statusConfig = {
 
 export const CertificationsGoals = ({ certifications }: CertificationsGoalsProps) => {
   const groupedCerts = {
-    completed: certifications.filter(c => c.status === 'completed'),
-    inProgress: certifications.filter(c => c.status === 'in-progress'),
-    planned: certifications.filter(c => c.status === 'planned')
+    year2025: certifications.filter(c => c.year === 2025),
+    year2026: certifications.filter(c => c.year === 2026)
   };
 
   return (
@@ -42,15 +41,15 @@ export const CertificationsGoals = ({ certifications }: CertificationsGoalsProps
         <p className="text-muted-foreground">Minha evolução contínua em QA e Testing</p>
       </div>
 
-      {/* Certificações Concluídas */}
-      {groupedCerts.completed.length > 0 && (
+      {/* 2025 - Certificações Conquistadas */}
+      {groupedCerts.year2025.length > 0 && (
         <div>
           <h3 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-            <CheckCircle2 className="w-5 h-5 text-green-500" />
-            Certificações Concluídas
+            <Calendar className="w-5 h-5 text-emerald-500" />
+            2025 - Certificações Conquistadas
           </h3>
           <div className="grid gap-4">
-            {groupedCerts.completed.map((cert) => {
+            {groupedCerts.year2025.map((cert) => {
               const config = statusConfig[cert.status];
               const Icon = config.icon;
               return (
@@ -65,9 +64,14 @@ export const CertificationsGoals = ({ certifications }: CertificationsGoalsProps
                         <p className="text-sm text-muted-foreground">{cert.date}</p>
                       )}
                     </div>
-                    <Badge variant="outline" className="border-primary/50">
-                      {cert.category}
-                    </Badge>
+                    <div className="flex gap-2 flex-col">
+                      <Badge variant="outline" className="border-primary/50">
+                        {cert.category}
+                      </Badge>
+                      <Badge className="bg-emerald-500/20 text-emerald-700 border border-emerald-500/50">
+                        {config.label}
+                      </Badge>
+                    </div>
                   </div>
                 </Card>
               );
@@ -76,15 +80,15 @@ export const CertificationsGoals = ({ certifications }: CertificationsGoalsProps
         </div>
       )}
 
-      {/* Em Progresso */}
-      {groupedCerts.inProgress.length > 0 && (
+      {/* 2026 - Próximos Objetivos */}
+      {groupedCerts.year2026.length > 0 && (
         <div>
           <h3 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-            <Clock className="w-5 h-5 text-yellow-500" />
-            Em Progresso
+            <Calendar className="w-5 h-5 text-amber-500" />
+            2026 - Próximos Objetivos
           </h3>
           <div className="grid gap-4">
-            {groupedCerts.inProgress.map((cert) => {
+            {groupedCerts.year2026.map((cert) => {
               const config = statusConfig[cert.status];
               const Icon = config.icon;
               return (
@@ -96,40 +100,14 @@ export const CertificationsGoals = ({ certifications }: CertificationsGoalsProps
                         <h4 className="font-semibold text-foreground">{cert.name}</h4>
                       </div>
                     </div>
-                    <Badge variant="outline" className="border-primary/50">
-                      {cert.category}
-                    </Badge>
-                  </div>
-                </Card>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* Planejados */}
-      {groupedCerts.planned.length > 0 && (
-        <div>
-          <h3 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-            <Target className="w-5 h-5 text-blue-500" />
-            Próximos Objetivos
-          </h3>
-          <div className="grid gap-4">
-            {groupedCerts.planned.map((cert) => {
-              const config = statusConfig[cert.status];
-              const Icon = config.icon;
-              return (
-                <Card key={cert.id} className={`p-4 border-2 ${config.bgColor} hover:shadow-lg transition-all`}>
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Icon className={`w-5 h-5 ${config.color}`} />
-                        <h4 className="font-semibold text-foreground">{cert.name}</h4>
-                      </div>
+                    <div className="flex gap-2 flex-col">
+                      <Badge variant="outline" className="border-primary/50">
+                        {cert.category}
+                      </Badge>
+                      <Badge className="bg-amber-500/20 text-amber-700 border border-amber-500/50">
+                        {config.label}
+                      </Badge>
                     </div>
-                    <Badge variant="outline" className="border-primary/50">
-                      {cert.category}
-                    </Badge>
                   </div>
                 </Card>
               );

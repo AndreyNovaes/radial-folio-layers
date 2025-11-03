@@ -14,7 +14,7 @@ interface HeroSectionProps {
 
 export const HeroSection = ({ name, title, bio, skills, email, linkedin, github, imageUrl }: HeroSectionProps) => {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-background via-card/30 to-background border-b border-border/50">
+    <section className="relative overflow-hidden bg-gradient-to-br from-background via-card/30 to-background border-b border-border/50 pt-20">
       {/* Animated grid background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
         <div className="absolute inset-0" style={{
@@ -29,17 +29,11 @@ export const HeroSection = ({ name, title, bio, skills, email, linkedin, github,
         <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '10s', animationDelay: '2s' }} />
       </div>
 
-      <div className="container mx-auto px-6 py-20 lg:py-32 relative">
+      <div className="container mx-auto px-6 py-12 lg:py-20 relative">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className="space-y-8 text-center lg:text-left animate-slide-up-fade">
             <div className="space-y-5">
-              <div className="inline-block">
-                <Badge variant="outline" className="border-primary/50 bg-primary/10 text-primary mb-4 px-4 py-1.5">
-                  🎯 Construtor Silencioso
-                </Badge>
-              </div>
-              
               <h1 className="text-5xl lg:text-7xl font-bold text-foreground tracking-tight bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text">
                 {name}
               </h1>
@@ -57,8 +51,13 @@ export const HeroSection = ({ name, title, bio, skills, email, linkedin, github,
             <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
               {email && (
                 <a
-                  href={`mailto:${email}`}
+                  href="#contato"
                   className="flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all hover:scale-105 shadow-lg hover:shadow-primary/25"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const element = document.querySelector("#contato");
+                    element?.scrollIntoView({ behavior: "smooth" });
+                  }}
                 >
                   <Mail className="w-5 h-5" />
                   <span className="text-sm font-semibold">Email</span>
@@ -109,18 +108,42 @@ export const HeroSection = ({ name, title, bio, skills, email, linkedin, github,
 
           {/* Right Content - Profile Image */}
           <div className="flex justify-center lg:justify-end">
-            <div className="relative">
+            <style>{`
+              @keyframes float-pulse {
+                0%, 100% {
+                  transform: translateY(0px) scale(1);
+                }
+                50% {
+                  transform: translateY(-12px) scale(1.02);
+                }
+              }
+              @keyframes border-pulse {
+                0%, 100% {
+                  opacity: 0.5;
+                }
+                50% {
+                  opacity: 1;
+                }
+              }
+              .animate-float-pulse {
+                animation: float-pulse 4s ease-in-out infinite;
+              }
+              .animate-border-pulse {
+                animation: border-pulse 3s ease-in-out infinite;
+              }
+            `}</style>
+            <div className="relative animate-float-pulse">
               {/* Outer glow */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-accent/20 to-secondary/30 rounded-full blur-3xl animate-glow-pulse" />
-              
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-accent/20 to-secondary/30 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }} />
+
               {/* Image container */}
               <div className="relative w-72 h-72 lg:w-96 lg:h-96">
                 {/* Animated border rings */}
-                <div className="absolute inset-0 rounded-full border-2 border-primary/30 animate-pulse" style={{ animationDuration: '4s' }} />
-                <div className="absolute inset-4 rounded-full border border-accent/20 animate-pulse" style={{ animationDuration: '3s', animationDelay: '0.5s' }} />
-                
+                <div className="absolute inset-0 rounded-full border-2 border-primary/40 animate-border-pulse" style={{ animationDuration: '3s' }} />
+                <div className="absolute inset-4 rounded-full border border-accent/30 animate-pulse" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }} />
+
                 {/* Image */}
-                <div className="absolute inset-8 rounded-full overflow-hidden border-4 border-primary/50 shadow-2xl shadow-primary/20 bg-gradient-to-br from-card to-muted">
+                <div className="absolute inset-8 rounded-full overflow-hidden border-4 border-primary/60 shadow-2xl shadow-primary/30 bg-gradient-to-br from-card to-muted">
                   {imageUrl ? (
                     <img
                       src={imageUrl}

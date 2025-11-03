@@ -13,6 +13,34 @@ export interface Certification {
   status: 'completed' | 'in-progress' | 'planned';
   date?: string;
   category: string;
+  year: 2025 | 2026;
+}
+
+export interface Project {
+  id: string;
+  title: string;
+  description: string;
+  longDescription?: string;
+  image?: string;
+  technologies: string[];
+  github?: string;
+  link?: string;
+  status: 'completed' | 'in-progress' | 'planned';
+  highlights?: string[];
+}
+
+export interface Article {
+  id: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  category: string;
+  date: string;
+  readTime: number;
+  author: string;
+  tags: string[];
+  image?: string;
+  link?: string;
 }
 
 export interface ProfileData {
@@ -28,8 +56,8 @@ export interface ProfileData {
 
 export const profileData: ProfileData = {
   name: "Andrey Novaes",
-  title: "QA Automation Engineer",
-  bio: "Construtor silencioso. Focado em criar soluções sólidas e eficazes através de automação de testes. Especialista em transformar complexidade em simplicidade.",
+  title: "QA Engineer",
+  bio: "Focado em criar soluções sólidas e eficazes através de automação de testes. Especialista em transformar complexidade em simplicidade.",
   email: "contato@example.com",
   linkedin: "linkedin.com/in/andrey-novaes",
   github: "github.com/andreynovaes",
@@ -37,21 +65,22 @@ export const profileData: ProfileData = {
     "Playwright",
     "Selenium",
     "Cypress",
-    "Python",
     "TypeScript",
     "API Testing",
     "Performance Testing",
-    "CI/CD"
+    "CI/CD",
+    "On-Premise",
+    "Cloud"
   ]
 };
 
 export const timeline: TimelineItem[] = [
   {
-    title: "QA Engineer",
+    title: "Estágio em QA",
     period: "Maio 2024 - Presente",
     company: "Telcomanager",
-    description: "Gerenciamento do ambiente Selenium Hub e infraestrutura completa de testes automatizados. Desenvolvimento e manutenção de testes automatizados usando Selenium IDE. Execução e análise de testes de desempenho e carga utilizando Locust.",
-    skills: ["Selenium", "Locust", "Testes Automatizados", "Testes de Desempenho", "Python"]
+    description: "Gerenciamento do ambiente Selenium Hub e infraestrutura completa de testes automatizados. Desenvolvimento e manutenção de testes automatizados usando Selenium IDE e Cypress. Execução e análise de testes de desempenho e carga.",
+    skills: ["Selenium", "Playwright", "Cypress", "Testes Automatizados", "Performance Testing"]
   },
   {
     title: "Desenvolvedor Full-stack/RPA",
@@ -78,30 +107,123 @@ export const timeline: TimelineItem[] = [
 
 export const certifications: Certification[] = [
   {
+    id: "ct-genai",
+    name: "ISTQB CT-GenAI (Testing with Generative AI)",
+    status: "in-progress",
+    category: "QA - SPECIALIST",
+    year: 2026
+  },
+  {
+    id: "az-900",
+    name: "Microsoft AZ-900 (Azure Fundamentals)",
+    status: "in-progress",
+    category: "CLOUD",
+    year: 2026
+  },
+  {
     id: "ctfl",
     name: "ISTQB Certified Tester Foundation Level (CTFL) v4.0",
     status: "completed",
     date: "Outubro 2025",
-    category: "CORE"
+    category: "QA - CORE",
+    year: 2025
   },
   {
-    id: "static-testing",
-    name: "Fundamentals of Static Testing",
+    id: "oracle-oci",
+    name: "Oracle Cloud Infrastructure 2022 - Foundations Associate",
     status: "completed",
-    date: "Setembro 2025",
-    category: "SPECIALIST"
+    date: "Novembro 2023",
+    category: "CLOUD",
+    year: 2025
   },
   {
-    id: "ct-genai",
-    name: "CT-GenAI (Testing with Generative AI)",
-    status: "in-progress",
-    category: "SPECIALIST"
-  },
+    id: "trybe",
+    name: "Trybe - Full-Stack Development",
+    status: "completed",
+    date: "Janeiro 2022",
+    category: "DEVELOPMENT",
+    year: 2025
+  }
+];
+
+// Projetos principais
+export const projects: Project[] = [
   {
-    id: "az-900",
-    name: "AZ-900 (Azure Fundamentals)",
-    status: "in-progress",
-    category: "CORE"
+    id: "desafio-tecnico-qa",
+    title: "Sistema de Testes Automatizados para Autenticação",
+    description: "Projeto de automação de testes completo com Page Objects, Selenium e Pytest, validando funcionalidades críticas de autenticação.",
+    longDescription: `Projeto de automação de testes para um sistema de autenticação completo, implementando o padrão Page Objects com Selenium WebDriver. Os testes validam funcionalidades como login, registro, recuperação de senha e dashboard, garantindo a qualidade e segurança do sistema de autenticação.
+
+Infraestrutura robusta com Docker Compose incluindo Selenoid, Allure Reports, Kiwi TCMS e Faker API. 16 planos de teste cobrindo funcionalidades críticas com gravação de vídeo, screenshots automáticos e relatórios detalhados.`,
+    image: "/projeto1.png",
+    technologies: ["Python", "Selenium", "PyTest", "Allure Reports", "Docker", "Kiwi TCMS"],
+    github: "https://github.com/AndreyNovaes/desafio_tecnico_qa_andrey_de_novaes_ferreira",
+    status: "completed",
+    highlights: [
+      "16 planos de teste com cobertura completa",
+      "Page Object Model para manutenibilidade",
+      "Execução paralela com Selenoid",
+      "Gravação de vídeos e screenshots automáticos",
+      "Relatórios Allure detalhados",
+      "Infraestrutura completa com Docker Compose"
+    ]
+  }
+];
+
+// Artigos sobre QA e Testing
+export const articles: Article[] = [
+  {
+    id: "page-objects-selenium",
+    title: "Page Object Model com Selenium: Estruturando Testes Automatizados",
+    excerpt: "Descubra como o padrão Page Object Model revoluciona a manutenibilidade e escalabilidade de testes automatizados com Selenium.",
+    link: "https://www.linkedin.com/in/andrey-de-novaes/",
+    content: `O Page Object Model (POM) é um dos padrões mais importantes na automação de testes. Ele separa a lógica de interação com a UI da lógica dos testes, criando uma estrutura limpa e manutenível.
+
+## Por que usar Page Objects?
+
+Quando você não usa o padrão POM, seus testes ficam repletos de seletores espalhados por todo o código. Se um elemento muda na UI, você precisa atualizar dúzias de testes. Com POM, você atualiza em um único lugar.
+
+### Estrutura básica de um Page Object
+
+\`\`\`python
+class LoginPage:
+    def __init__(self, driver):
+        self.driver = driver
+        self.username_input = (By.ID, "username")
+        self.password_input = (By.ID, "password")
+        self.login_button = (By.XPATH, "//button[@type='submit']")
+
+    def enter_username(self, username):
+        self.driver.find_element(*self.username_input).send_keys(username)
+
+    def enter_password(self, password):
+        self.driver.find_element(*self.password_input).send_keys(password)
+
+    def click_login(self):
+        self.driver.find_element(*self.login_button).click()
+\`\`\`
+
+## Benefícios do Page Object Model
+
+1. **Manutenibilidade**: Mudanças na UI são refletidas em um único lugar
+2. **Reutilização**: Métodos podem ser usados em múltiplos testes
+3. **Legibilidade**: Testes leem como um documento, não como código técnico
+4. **Escalabilidade**: Fácil adicionar novos testes e páginas
+
+## Boas práticas
+
+- Um Page Object por página/tela da aplicação
+- Métodos descrevem ações do usuário, não detalhes técnicos
+- Use nomes significativos para seletores e métodos
+- Mantenha os seletores privados (encapsulamento)
+
+O Page Object Model não é apenas um padrão de código, é uma filosofia de como estruturar testes para que eles cresçam com sua aplicação.`,
+    category: "QA / Automação",
+    date: "02 de Novembro, 2025",
+    readTime: 8,
+    author: "Andrey Novaes",
+    tags: ["Selenium", "Page Objects", "Automação", "Padrões de Design"],
+    image: "/placeholder.svg"
   }
 ];
 
@@ -116,23 +238,16 @@ export interface SkillEvolution {
 }
 
 export const skillsEvolution: SkillEvolution[] = [
-  // Hard Skills
-  { label: "Automação", "2024": 75, "2025": 95, meta: 98, color: "hsl(var(--primary))" },
-  { label: "API Testing", "2024": 70, "2025": 90, meta: 95, color: "hsl(var(--core))" },
-  { label: "Performance", "2024": 65, "2025": 85, meta: 95, color: "hsl(var(--advanced))" },
-  { label: "CI/CD", "2024": 70, "2025": 88, meta: 95, color: "hsl(var(--specialist))" },
-  { label: "Selenium", "2024": 80, "2025": 90, meta: 92, color: "hsl(var(--supporting))" },
-  { label: "Playwright", "2024": 75, "2025": 93, meta: 98, color: "hsl(var(--primary))" },
-  { label: "Cypress", "2024": 70, "2025": 87, meta: 90, color: "hsl(var(--core))" },
-  { label: "Python", "2024": 75, "2025": 88, meta: 92, color: "hsl(var(--advanced))" },
-  
-  // Soft Skills baseadas no perfil psicológico
-  { label: "Capacidade Analítica", "2024": 90, "2025": 94, meta: 98, color: "hsl(var(--expert))", isSoftSkill: true },
-  { label: "Facilitação", "2024": 88, "2025": 94, meta: 96, color: "hsl(var(--supporting))", isSoftSkill: true },
-  { label: "Pensamento Criativo", "2024": 80, "2025": 85, meta: 90, color: "hsl(var(--primary))", isSoftSkill: true },
-  { label: "Ambição", "2024": 75, "2025": 80, meta: 85, color: "hsl(var(--core))", isSoftSkill: true },
-  { label: "Comunicação", "2024": 72, "2025": 78, meta: 85, color: "hsl(var(--advanced))", isSoftSkill: true },
-  { label: "Flexibilidade", "2024": 70, "2025": 76, meta: 82, color: "hsl(var(--specialist))", isSoftSkill: true }
+  // Hard Skills - Baseado em experiência real (estágio QA desde Jan 2024)
+  { label: "On-Premise", "2024": 20, "2025": 75, meta: 80, color: "hsl(var(--primary))" },
+  { label: "Playwright", "2024": 0, "2025": 70, meta: 80, color: "hsl(var(--core))" },
+  { label: "Selenium", "2024": 30, "2025": 70, meta: 80, color: "hsl(var(--advanced))" },
+  { label: "Cypress", "2024": 15, "2025": 62, meta: 75, color: "hsl(var(--specialist))" },
+  { label: "API Testing", "2024": 30, "2025": 60, meta: 70, color: "hsl(var(--supporting))" },
+  { label: "TypeScript", "2024": 20, "2025": 60, meta: 75, color: "hsl(var(--primary))" },
+  { label: "Performance", "2024": 15, "2025": 55, meta: 65, color: "hsl(var(--core))" },
+  { label: "CI/CD", "2024": 25, "2025": 50, meta: 65, color: "hsl(var(--advanced))" },
+  { label: "Cloud", "2024": 10, "2025": 35, meta: 55, color: "hsl(var(--specialist))" }
 ];
 
 // História pessoal
@@ -143,7 +258,7 @@ export const myStory = {
 
 A transição para tecnologia não foi acidental. Foi uma evolução natural de alguém que sempre buscou excelência através de análise profunda e execução precisa. Como QA, encontrei meu elemento: o espaço onde posso construir qualidade nos bastidores, onde cada teste é uma peça estratégica no tabuleiro.
 
-Sou um construtor silencioso. Não faço barulho, faço resultados. Minha capacidade analítica (93.7%) e facilitação (93.7%) me permitem mergulhar em problemas complexos e emergir com soluções elegantes. Prefiro processos bem estabelecidos onde posso aplicar criatividade dentro de estruturas sólidas.
+Sou um construtor silencioso. Não faço barulho, faço resultados. Prefiro processos bem estabelecidos onde posso aplicar criatividade dentro de estruturas sólidas.
 
 De jogador profissional a engenheiro de qualidade, a essência permanece: análise estratégica, execução precisa, resultados consistentes. Construo qualidade, um teste de cada vez.`
 };

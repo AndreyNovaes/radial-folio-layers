@@ -7,25 +7,27 @@ type YearType = "2024" | "2025" | "meta";
 
 interface SkillsEvolutionRadarProps {
   skills?: SkillEvolution[];
+  showCard?: boolean;
 }
 
-export const SkillsEvolutionRadar = ({ skills = skillsEvolution }: SkillsEvolutionRadarProps) => {
-  const [selectedYear, setSelectedYear] = useState<YearType>("2025");
-  const [showSoftSkills, setShowSoftSkills] = useState(true);
-  const [showHardSkills, setShowHardSkills] = useState(true);
+export const SkillsEvolutionRadar = ({
+  skills = skillsEvolution,
+  showCard = true
+}: SkillsEvolutionRadarProps) => {
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+  const selectedYear: YearType = "2025";
 
   const centerX = 300;
   const centerY = 300;
   const maxRadius = 200;
   const minRadius = 40;
 
-  // Filter skills based on selection
-  const filteredSkills = skills.filter(skill => {
-    if (skill.isSoftSkill && !showSoftSkills) return false;
-    if (!skill.isSoftSkill && !showHardSkills) return false;
-    return true;
-  });
+  const handleSkillHover = (skillLabel: string | null) => {
+    setHoveredSkill(skillLabel);
+  };
+
+  // Use all skills (only hard skills now)
+  const filteredSkills = skills;
 
   // Calculate points for the radar chart
   const getRadarPoints = (year: YearType) => {
@@ -48,58 +50,10 @@ export const SkillsEvolutionRadar = ({ skills = skillsEvolution }: SkillsEvoluti
   const comparisonPolygon = comparisonPoints ? comparisonPoints.map(p => `${p.x},${p.y}`).join(' ') : null;
   const metaPolygon = metaPoints.map(p => `${p.x},${p.y}`).join(' ');
 
-  const yearLabels: Record<YearType, string> = {
-    "2024": "2024 - Fundação",
-    "2025": "2025 - Presente",
-    "meta": "Próximo Nível"
-  };
-
-  return (
-    <Card className="relative w-full max-w-[700px] p-8 bg-gradient-to-br from-card/50 to-background border-border/50 backdrop-blur-sm">
-      {/* Controls */}
-      <div className="mb-6 space-y-4">
-        <div className="flex flex-wrap gap-2 justify-center">
-          {(Object.keys(yearLabels) as YearType[]).map((year) => (
-            <button
-              key={year}
-              onClick={() => setSelectedYear(year)}
-              className={`px-4 py-2 rounded-lg font-semibold transition-all ${
-                selectedYear === year
-                  ? "bg-primary text-primary-foreground shadow-lg"
-                  : "bg-muted text-muted-foreground hover:bg-muted/80"
-              }`}
-            >
-              {yearLabels[year]}
-            </button>
-          ))}
-        </div>
-
-        <div className="flex flex-wrap gap-2 justify-center">
-          <button
-            onClick={() => setShowHardSkills(!showHardSkills)}
-            className={`px-3 py-1 rounded text-sm font-medium transition-all ${
-              showHardSkills
-                ? "bg-primary/20 text-primary border border-primary/30"
-                : "bg-muted text-muted-foreground"
-            }`}
-          >
-            Hard Skills
-          </button>
-          <button
-            onClick={() => setShowSoftSkills(!showSoftSkills)}
-            className={`px-3 py-1 rounded text-sm font-medium transition-all ${
-              showSoftSkills
-                ? "bg-secondary/20 text-secondary-foreground border border-secondary/30"
-                : "bg-muted text-muted-foreground"
-            }`}
-          >
-            Soft Skills
-          </button>
-        </div>
-      </div>
-
+  const cardContent = (
+    <>
       {/* SVG Radar Chart */}
-      <div className="relative w-full aspect-square max-w-[600px] mx-auto">
+      <div className="relative w-full aspect-square max-w-[700px] mx-auto">
         <svg viewBox="0 0 600 600" className="w-full h-full">
           <defs>
             <radialGradient id="radarGlow" cx="50%" cy="50%">
@@ -211,8 +165,8 @@ export const SkillsEvolutionRadar = ({ skills = skillsEvolution }: SkillsEvoluti
             return (
               <g
                 key={index}
-                onMouseEnter={() => setHoveredSkill(point.skill.label)}
-                onMouseLeave={() => setHoveredSkill(null)}
+                onMouseEnter={() => handleSkillHover(point.skill.label)}
+                onMouseLeave={() => handleSkillHover(null)}
                 className="cursor-pointer transition-all duration-300"
               >
                 {/* Hover glow */}
@@ -255,26 +209,14 @@ export const SkillsEvolutionRadar = ({ skills = skillsEvolution }: SkillsEvoluti
 
                 {/* Value on hover */}
                 {isHovered && (
-                  <>
-                    <text
-                      x={labelX}
-                      y={labelY + 14}
-                      textAnchor={labelX > centerX ? "start" : labelX < centerX ? "end" : "middle"}
-                      className="text-xs font-bold fill-primary"
-                    >
-                      {point.value}%
-                    </text>
-                    {point.skill.isSoftSkill && (
-                      <text
-                        x={labelX}
-                        y={labelY + 26}
-                        textAnchor={labelX > centerX ? "start" : labelX < centerX ? "end" : "middle"}
-                        className="text-[9px] fill-muted-foreground"
-                      >
-                        soft skill
-                      </text>
-                    )}
-                  </>
+                  <text
+                    x={labelX}
+                    y={labelY + 14}
+                    textAnchor={labelX > centerX ? "start" : labelX < centerX ? "end" : "middle"}
+                    className="text-xs font-bold fill-primary"
+                  >
+                    {point.value}%
+                  </text>
                 )}
               </g>
             );
@@ -293,53 +235,49 @@ export const SkillsEvolutionRadar = ({ skills = skillsEvolution }: SkillsEvoluti
             />
             <text
               x={centerX}
-              y={centerY - 8}
+              y={centerY}
               textAnchor="middle"
               dominantBaseline="middle"
-              className="text-sm font-bold fill-primary"
+              className="text-base font-bold fill-primary"
             >
-              {yearLabels[selectedYear].split(' - ')[0]}
-            </text>
-            <text
-              x={centerX}
-              y={centerY + 8}
-              textAnchor="middle"
-              dominantBaseline="middle"
-              className="text-[10px] fill-muted-foreground"
-            >
-              {yearLabels[selectedYear].split(' - ')[1]}
+              2025
             </text>
           </g>
         </svg>
       </div>
 
       {/* Legend */}
-      <div className="mt-6 flex flex-wrap gap-3 justify-center">
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded-full bg-primary" />
-          <span className="text-xs text-muted-foreground">Ano Selecionado</span>
+      <div className="mt-4 flex flex-wrap gap-2 justify-center">
+        <div className="flex items-center gap-1">
+          <div className="w-2 h-2 rounded-full bg-primary" />
+          <span className="text-xs text-muted-foreground">Ano</span>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-1 bg-muted-foreground opacity-40" style={{ borderTop: "2px dashed" }} />
-          <span className="text-xs text-muted-foreground">2024 (Base)</span>
+        <div className="flex items-center gap-1">
+          <div className="w-2 h-0.5 bg-muted-foreground opacity-40" style={{ borderTop: "1px dashed" }} />
+          <span className="text-xs text-muted-foreground">Base</span>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-1 bg-accent opacity-30" style={{ borderTop: "2px dashed" }} />
-          <span className="text-xs text-muted-foreground">Meta Futura</span>
+        <div className="flex items-center gap-1">
+          <div className="w-2 h-0.5 bg-accent opacity-30" style={{ borderTop: "1px dashed" }} />
+          <span className="text-xs text-muted-foreground">Meta</span>
         </div>
       </div>
 
       {/* Info */}
-      <div className="mt-4 text-center">
-        <p className="text-xs text-muted-foreground">
-          <Badge variant="outline" className="mr-2">
-            {filteredSkills.filter(s => !s.isSoftSkill).length} Hard Skills
-          </Badge>
-          <Badge variant="outline">
-            {filteredSkills.filter(s => s.isSoftSkill).length} Soft Skills
-          </Badge>
-        </p>
+      <div className="mt-3 text-center">
+        <Badge variant="outline" className="text-xs">
+          {filteredSkills.length} Hard Skills
+        </Badge>
       </div>
-    </Card>
+    </>
   );
+
+  if (showCard) {
+    return (
+      <Card className="relative w-full p-6 bg-gradient-to-br from-card/50 to-background border-border/50 backdrop-blur-sm">
+        {cardContent}
+      </Card>
+    );
+  }
+
+  return <div className="w-full">{cardContent}</div>;
 };
