@@ -9,11 +9,6 @@ interface TimelineProps {
 export const Timeline = ({ items }: TimelineProps) => {
   return (
     <div className="space-y-6">
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-foreground mb-2">Trajetória Profissional</h2>
-        <p className="text-muted-foreground">Minha jornada profissional e acadêmica, do presente ao passado</p>
-      </div>
-
       <div className="relative">
         {/* Linha vertical */}
         <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-primary/50 to-transparent" />
