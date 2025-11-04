@@ -22,6 +22,11 @@ export const SkillsEvolutionRadar = ({
   const maxRadius = 200;
   const minRadius = 40;
 
+  // Responsive font size based on viewport
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const baseFontSize = isMobile ? 20 : 16;
+  const hoverFontSize = isMobile ? 24 : 18;
+
   const handleSkillHover = (skillLabel: string | null) => {
     setHoveredSkill(skillLabel);
   };
@@ -199,10 +204,10 @@ export const SkillsEvolutionRadar = ({
                   y={labelY}
                   textAnchor={labelX > centerX ? "start" : labelX < centerX ? "end" : "middle"}
                   dominantBaseline="middle"
-                  className={`text-xs font-semibold transition-all duration-300 ${
+                  className={`font-semibold transition-all duration-300 ${
                     isHovered ? "fill-primary" : "fill-foreground"
                   }`}
-                  style={{ fontSize: isHovered ? "12px" : "10px" }}
+                  style={{ fontSize: isHovered ? `${hoverFontSize}px` : `${baseFontSize}px`, fontWeight: 700 }}
                 >
                   {point.skill.label}
                 </text>
@@ -211,9 +216,10 @@ export const SkillsEvolutionRadar = ({
                 {isHovered && (
                   <text
                     x={labelX}
-                    y={labelY + 14}
+                    y={labelY + 16}
                     textAnchor={labelX > centerX ? "start" : labelX < centerX ? "end" : "middle"}
-                    className="text-xs font-bold fill-primary"
+                    className="font-bold fill-primary"
+                    style={{ fontSize: isMobile ? "16px" : "13px" }}
                   >
                     {point.value}%
                   </text>

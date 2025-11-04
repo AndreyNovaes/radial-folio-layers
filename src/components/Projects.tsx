@@ -10,18 +10,23 @@ export function Projects() {
   const selectedProject = projects.find((p) => p.id === selectedProjectId);
 
   return (
-    <section id="projetos" className="w-full py-10 lg:py-16">
-      <div className="container mx-auto px-4 lg:px-8">
+    <section id="projetos" className="w-full py-20 lg:py-28">
+      <div className="container mx-auto px-6 max-w-7xl px-0 lg:px-12">
         {/* Header */}
-        <div className="mb-12">
-          <h2 className="text-4xl font-bold tracking-tighter mb-2">Projetos</h2>
-          <p className="text-lg text-muted-foreground">
+        <div className="mb-16">
+          <Badge className="mb-6 bg-primary/10 text-primary border-primary/20">
+            Projetos
+          </Badge>
+          <h2 className="text-4xl font-bold tracking-tighter mb-4 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+            Meus Projetos
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl">
             Explorando automação de testes e qualidade de software através de projetos práticos
           </p>
         </div>
 
         {/* Projects Grid */}
-        <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
+        <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-2">
           {projects.map((project) => (
             <Card
               key={project.id}

@@ -2,6 +2,7 @@ import express from 'express';
 import type { Request, Response } from 'express';
 import cors from 'cors';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 
@@ -25,7 +26,12 @@ app.use('/api/', async (req: Request, res: Response) => {
   try {
     // Extrair o caminho após /api/
     const route = req.path.replace(/^\//, '') || 'send-email';
-    const functionPath = path.join(__dirname, 'api', `${route}.ts`);
+    let functionPath = path.join(__dirname, 'api', `${route}.ts`);
+
+    // Se .ts não existe, tentar .js
+    if (!fs.existsSync(functionPath)) {
+      functionPath = path.join(__dirname, 'api', `${route}.js`);
+    }
 
     // Importar dinamicamente a função
     const module = await import(`file://${functionPath}`);

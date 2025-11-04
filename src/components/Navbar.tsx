@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
-export const Navbar = () => {
+interface NavbarProps {
+  onContactClick?: () => void;
+}
+
+export const Navbar = ({ onContactClick }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [ripples, setRipples] = useState<
     Array<{ id: number; x: number; y: number; linkHref: string }>
@@ -9,9 +13,8 @@ export const Navbar = () => {
 
   const links = [
     { label: "Sobre", href: "#sobre" },
-    { label: "Competências", href: "#competencias" },
     { label: "Trajetória", href: "#trajetoria" },
-    { label: "Projetos", href: "#projetos" },
+    { label: "Competências", href: "#competencias" },
     { label: "Artigos", href: "#artigos" },
     { label: "Contato", href: "#contato" },
   ];
@@ -22,6 +25,13 @@ export const Navbar = () => {
     const y = e.clientY - rect.top;
     const id = Date.now();
     const linkHref = e.currentTarget.getAttribute("href") || "";
+
+    // Special handling for Contato link
+    if (linkHref === "#contato") {
+      e.preventDefault();
+      onContactClick?.();
+      return;
+    }
 
     setRipples([...ripples, { id, x, y, linkHref }]);
 
@@ -35,6 +45,10 @@ export const Navbar = () => {
       const element = document.querySelector(linkHref);
       element?.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  const handleLogoClick = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -58,9 +72,13 @@ export const Navbar = () => {
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="font-bold text-lg bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+          <button
+            onClick={handleLogoClick}
+            className="font-bold text-lg bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent hover:opacity-80 transition-opacity cursor-pointer"
+            aria-label="Go to top"
+          >
             Andrey
-          </div>
+          </button>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8">

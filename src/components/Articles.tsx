@@ -6,12 +6,17 @@ import { Clock, Calendar, ExternalLink } from "lucide-react";
 
 export function Articles() {
   return (
-    <section id="artigos" className="w-full py-10 lg:py-16">
-      <div className="container mx-auto px-4 lg:px-8">
+    <section id="artigos" className="w-full py-20 lg:py-28">
+      <div className="container mx-auto px-6 max-w-7xl px-0 lg:px-12">
         {/* Header */}
-        <div className="mb-12">
-          <h2 className="text-4xl font-bold tracking-tighter mb-2">Artigos</h2>
-          <p className="text-lg text-muted-foreground">
+        <div className="mb-16">
+          <Badge className="mb-6 bg-primary/10 text-primary border-primary/20">
+            Artigos
+          </Badge>
+          <h2 className="text-4xl font-bold tracking-tighter mb-4 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+            Artigos & Insights
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl">
             Compartilhando conhecimento e experiências sobre QA, automação de testes e qualidade de software
           </p>
         </div>

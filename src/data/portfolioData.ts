@@ -58,7 +58,7 @@ export const profileData: ProfileData = {
   name: "Andrey Novaes",
   title: "QA Engineer",
   bio: "Focado em criar soluções sólidas e eficazes através de automação de testes. Especialista em transformar complexidade em simplicidade.",
-  email: "contato@example.com",
+  email: "andreynovaespro@gmail.com",
   linkedin: "linkedin.com/in/andrey-novaes",
   github: "github.com/andreynovaes",
   skills: [
@@ -252,15 +252,15 @@ export const skillsEvolution: SkillEvolution[] = [
 
 // História pessoal
 export const myStory = {
-  title: "O Construtor Silencioso",
-  subtitle: "Da arena competitiva aos bastidores da qualidade",
-  content: `Minha jornada começou longe dos teclados de código. Em 2015-2017, competia no Circuito Desafiante de League of Legends, um dos maiores campeonatos de eSports do Brasil. Ali aprendi que vencer não é sobre gritar mais alto, mas sobre construir estratégias sólidas, silenciosamente.
+  title: "O Estrategista de Qualidade",
+  subtitle: "Da arena competitiva aos domínios da excelência",
+  content: `Minha jornada começou longe dos teclados de código. Em 2015-2017, competia no Circuito Desafiante de League of Legends, um dos maiores campeonatos de eSports do Brasil. Ali aprendi que a vitória vem de análise estratégica, execução impecável e tomada de decisões precisas sob pressão.
 
-A transição para tecnologia não foi acidental. Foi uma evolução natural de alguém que sempre buscou excelência através de análise profunda e execução precisa. Como QA, encontrei meu elemento: o espaço onde posso construir qualidade nos bastidores, onde cada teste é uma peça estratégica no tabuleiro.
+A transição para tecnologia não foi acidental. Foi uma evolução natural de alguém que sempre buscou excelência através de análise profunda e execução precisa. Como QA, encontrei meu elemento: o espaço onde posso garantir qualidade em cada entrega, onde cada teste é uma jogada estratégica bem calculada.
 
-Sou um construtor silencioso. Não faço barulho, faço resultados. Prefiro processos bem estabelecidos onde posso aplicar criatividade dentro de estruturas sólidas.
+Sou um estrategista de qualidade. Meu foco é em processos bem estabelecidos onde aplico criatividade e inovação dentro de estruturas sólidas. Não sou apenas executor - sou alguém que pensa estrategicamente sobre como garantir a melhor qualidade possível.
 
-De jogador profissional a engenheiro de qualidade, a essência permanece: análise estratégica, execução precisa, resultados consistentes. Construo qualidade, um teste de cada vez.`
+De jogador profissional a engenheiro de qualidade, a essência permanece: análise estratégica, execução impecável, resultados consistentes. Domino testes, um estratégia de cada vez.`
 };
 
 // Seções do menu radial - customizável

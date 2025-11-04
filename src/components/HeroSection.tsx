@@ -10,9 +10,10 @@ interface HeroSectionProps {
   linkedin?: string;
   github?: string;
   imageUrl?: string;
+  onEmailClick?: () => void;
 }
 
-export const HeroSection = ({ name, title, bio, skills, email, linkedin, github, imageUrl }: HeroSectionProps) => {
+export const HeroSection = ({ name, title, bio, skills, email, linkedin, github, imageUrl, onEmailClick }: HeroSectionProps) => {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-background via-card/30 to-background border-b border-border/50 pt-20">
       {/* Animated grid background */}
@@ -50,18 +51,15 @@ export const HeroSection = ({ name, title, bio, skills, email, linkedin, github,
             {/* Contact Links */}
             <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
               {email && (
-                <a
-                  href="#contato"
+                <button
                   className="flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all hover:scale-105 shadow-lg hover:shadow-primary/25"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    const element = document.querySelector("#contato");
-                    element?.scrollIntoView({ behavior: "smooth" });
+                  onClick={() => {
+                    onEmailClick?.();
                   }}
                 >
                   <Mail className="w-5 h-5" />
                   <span className="text-sm font-semibold">Email</span>
-                </a>
+                </button>
               )}
               {linkedin && (
                 <a
