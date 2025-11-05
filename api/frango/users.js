@@ -5,29 +5,42 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const dbPath = path.join(__dirname, '../../data/frango.json');
 
+// In-memory fallback for Vercel serverless
+let memoryDb = { users: [] };
+
 function ensureDataDir() {
   const dir = path.dirname(dbPath);
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
+  try {
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+  } catch (error) {
+    console.log('Warning: Cannot create data directory (expected on Vercel)');
   }
 }
 
 function readDb() {
-  ensureDataDir();
   try {
+    ensureDataDir();
     if (fs.existsSync(dbPath)) {
       const data = fs.readFileSync(dbPath, 'utf-8');
-      return JSON.parse(data);
+      memoryDb = JSON.parse(data);
+      return memoryDb;
     }
   } catch (error) {
-    console.error('Error reading DB:', error);
+    console.log('Using in-memory database');
   }
-  return { users: [] };
+  return memoryDb;
 }
 
 function writeDb(data) {
-  ensureDataDir();
-  fs.writeFileSync(dbPath, JSON.stringify(data, null, 2), 'utf-8');
+  memoryDb = data;
+  try {
+    ensureDataDir();
+    fs.writeFileSync(dbPath, JSON.stringify(data, null, 2), 'utf-8');
+  } catch (error) {
+    console.log('Cannot write to filesystem (Vercel serverless), using memory only');
+  }
 }
 
 // Get all users
