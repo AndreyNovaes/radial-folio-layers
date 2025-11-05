@@ -1,6 +1,6 @@
-import { addChickenToUserDb, findUserById } from './users.js';
+import { addChickenToUserDb, findUserById } from './users-supabase.js';
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -21,13 +21,13 @@ export default function handler(req, res) {
     }
 
     // Add chicken to user
-    const success = addChickenToUserDb(userId, chickenId);
+    const success = await addChickenToUserDb(userId, chickenId);
     if (!success) {
       return res.status(400).json({ error: 'Could not add chicken. Max pulls reached?' });
     }
 
     // Return updated user
-    const user = findUserById(userId);
+    const user = await findUserById(userId);
     return res.status(200).json(user);
   } catch (error) {
     console.error('Error:', error);

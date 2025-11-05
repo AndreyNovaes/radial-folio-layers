@@ -1,6 +1,6 @@
-import { findUserByUsername, findUserById } from './users.js';
+import { findUserByUsername, findUserById } from './users-supabase.js';
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -17,7 +17,7 @@ export default function handler(req, res) {
     const { username, id } = req.query;
 
     if (username && typeof username === 'string') {
-      const user = findUserByUsername(username);
+      const user = await findUserByUsername(username);
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
       }
@@ -25,7 +25,7 @@ export default function handler(req, res) {
     }
 
     if (id && typeof id === 'string') {
-      const user = findUserById(id);
+      const user = await findUserById(id);
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
       }

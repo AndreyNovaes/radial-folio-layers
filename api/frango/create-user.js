@@ -1,6 +1,6 @@
-import { createNewUser, findUserByUsername } from './users.js';
+import { createNewUser, findUserByUsername } from './users-supabase.js';
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -21,13 +21,13 @@ export default function handler(req, res) {
     }
 
     // Check if user already exists
-    const existing = findUserByUsername(username);
+    const existing = await findUserByUsername(username);
     if (existing) {
       return res.status(200).json(existing);
     }
 
     // Create new user
-    const user = createNewUser(username);
+    const user = await createNewUser(username);
     return res.status(201).json(user);
   } catch (error) {
     console.error('Error:', error);

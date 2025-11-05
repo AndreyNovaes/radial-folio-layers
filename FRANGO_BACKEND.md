@@ -2,31 +2,51 @@
 
 ## 🚀 Quick Start
 
-O backend do Gacha de Frango usa **Vercel API Routes** com armazenamento em **JSON** para simplicidade.
+O backend do Gacha de Frango usa **Vercel API Routes** com **Supabase** (PostgreSQL) para armazenamento persistente.
 
-### 1. Instalar Dependências
+### 1. Configurar Supabase
+
+1. **Criar conta no Supabase**: https://supabase.com
+2. **Criar novo projeto**
+3. **Executar o schema SQL**:
+   - Vá para: SQL Editor no painel do Supabase
+   - Copie e execute o conteúdo de: `api/frango/schema.sql`
+   - Verifique se a tabela `frango_users` foi criada
+
+4. **Obter credenciais**:
+   - Settings → API
+   - Copie: `URL` e `anon/public key`
+
+### 2. Configurar Variáveis de Ambiente
+
+**Vercel (Produção):**
+1. Acesse: https://vercel.com/[seu-username]/[seu-projeto]/settings/environment-variables
+2. Adicione:
+   ```
+   SUPABASE_URL=https://[seu-projeto].supabase.co
+   SUPABASE_ANON_KEY=[sua-chave-pública]
+   ```
+
+**Local (Desenvolvimento):**
+Crie `.env` na raiz do projeto:
+```bash
+SUPABASE_URL=https://[seu-projeto].supabase.co
+SUPABASE_ANON_KEY=[sua-chave-pública]
+```
+
+### 3. Instalar Dependências
 
 ```bash
 npm install
 ```
 
-### 2. Criar Pasta de Dados (Desenvolvimento)
+### 4. Rodar em Desenvolvimento
 
 ```bash
-mkdir -p data
-```
-
-### 3. Rodar em Desenvolvimento
-
-```bash
-# Terminal 1: Frontend
 npm run dev
-
-# Terminal 2: Em outra janela (opcional - local apenas)
-npm run dev:api
 ```
 
-### 4. Deploy (Vercel)
+### 5. Deploy (Vercel)
 
 ```bash
 vercel --prod
@@ -38,11 +58,13 @@ O Vercel detectará automaticamente os endpoints em `api/frango/` como API Route
 
 ```
 api/frango/
-├── users.ts           # Funções de banco de dados
-├── create-user.ts     # POST /api/frango/create-user
-├── get-user.ts        # GET /api/frango/get-user
-├── add-pull.ts        # POST /api/frango/add-pull
-└── get-ranking.ts     # GET /api/frango/get-ranking
+├── schema.sql           # Schema do banco Supabase
+├── users-supabase.js    # Funções de banco (Supabase - ATIVO)
+├── users.js             # Funções de banco (JSON - DEPRECATED)
+├── create-user.js       # POST /api/frango/create-user
+├── get-user.js          # GET /api/frango/get-user
+├── add-pull.js          # POST /api/frango/add-pull
+└── get-ranking.js       # GET /api/frango/get-ranking
 ```
 
 ## 🔌 Endpoints da API
@@ -75,13 +97,15 @@ Response: [ UserProfile[], ... ] (top 10)
 
 ## 💾 Armazenamento
 
-- **Desenvolvimento**: JSON file em `data/frango.json`
-- **Produção (Vercel)**: JSON file em `/tmp/data/frango.json` (temporário por deployment)
+- **Produção**: **Supabase (PostgreSQL)** - Persistente e escalável ✅
+- **Desenvolvimento**: Também usa Supabase (mesmas credenciais)
 
-**Nota**: Para produção persistente, considere integrar com:
-- Supabase (PostgreSQL)
-- Firebase Realtime Database
-- MongoDB Atlas
+**Benefícios do Supabase:**
+- ✅ Dados persistentes entre deploys
+- ✅ Ranking global em tempo real
+- ✅ Backups automáticos
+- ✅ Row Level Security (RLS)
+- ✅ 500MB grátis no plano free
 
 ## 📝 Dados do Usuário
 
@@ -99,9 +123,9 @@ interface UserProfile {
 
 ## 🎮 Como Funciona
 
-1. **Login**: Usuário digita nome → `POST /create-user`
-2. **Pull**: Clica botão → `POST /add-pull` → API salva no JSON
-3. **Ranking**: Carrega página → `GET /get-ranking` → Exibe top 10
+1. **Login**: Usuário digita nome → `POST /create-user` → Salva no Supabase
+2. **Pull**: Clica botão → `POST /add-pull` → API atualiza Supabase
+3. **Ranking**: Carrega página → `GET /get-ranking` → Busca top 10 do Supabase
 
 ## 🔒 Segurança (Desenvolvimento)
 
@@ -117,17 +141,24 @@ interface UserProfile {
 
 ## 🐛 Troubleshooting
 
-**Erro: "Cannot find module 'fs'"**
-- Node.js 18+ é obrigatório
-- Verificar `package.json` > `"type": "module"`
+**Erro 500: "Internal server error" no create-user**
+- Verifique se as variáveis de ambiente estão configuradas no Vercel
+- Verifique se a tabela `frango_users` existe no Supabase
+- Cheque os logs do Vercel: `vercel logs [deployment-url]`
+- Verifique logs do Supabase: Logs → API
 
-**Ranking não atualiza em tempo real**
-- JSON é atualizado apenas em disco
-- Atualizar manualmente com `getRanking()`
+**Erro 404: "User not found"**
+- Usuário pode ter sido criado com fallback local (`local-...`)
+- Limpe o localStorage do navegador e faça login novamente
+- Verifique se o usuário existe no Supabase (Table Editor)
 
-**Dados perdidos após deploy**
-- Vercel serverless functions não persistem arquivos
-- Usar banco de dados real em produção
+**Erro: "Cannot find module '@supabase/supabase-js'"**
+- Execute: `npm install @supabase/supabase-js`
+- Faça rebuild: `npm run build`
+
+**Dados não sincronizam entre dispositivos**
+- Verifique se está usando Supabase (não JSON local)
+- Confirme que API endpoints importam de `users-supabase.js`
 
 ## 📊 Exemplo Completo
 
@@ -143,6 +174,17 @@ const ranking = await getRanking();
 // GET /api/frango/get-ranking → [ { rank 1 }, { rank 2 }, ... ]
 ```
 
+## 🔄 Migração (JSON → Supabase)
+
+Se você estava usando a versão antiga com JSON:
+
+1. **Dados locais serão perdidos** (não há como migrar automaticamente)
+2. **Limpe localStorage dos usuários**:
+   - O app detecta IDs `local-*` e limpa automaticamente
+3. **Usuários precisam fazer login novamente** no sistema Supabase
+
+**Nota**: A versão antiga (`users.js`) ainda está disponível, mas deprecada.
+
 ---
 
-**Última atualização**: Novembro 2024
+**Última atualização**: Novembro 2024 (Migrado para Supabase)

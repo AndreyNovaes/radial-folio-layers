@@ -38,6 +38,14 @@ export function FrangoApp() {
     const loadData = async () => {
       const savedUserId = localStorage.getItem("frangoUserId");
 
+      // Clean up old local-only IDs (from fallback mode)
+      if (savedUserId && savedUserId.startsWith('local-')) {
+        console.log('Cleaning up old local-only user ID:', savedUserId);
+        localStorage.removeItem("frangoUserId");
+        setIsLoading(false);
+        return;
+      }
+
       if (savedUserId) {
         const savedUser = await getUser(savedUserId);
         if (savedUser) {

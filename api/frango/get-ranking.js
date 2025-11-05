@@ -1,6 +1,6 @@
-import { getRankingDb } from './users.js';
+import { getRankingDb } from './users-supabase.js';
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -14,7 +14,7 @@ export default function handler(req, res) {
   }
 
   try {
-    const ranking = getRankingDb();
+    const ranking = await getRankingDb();
     return res.status(200).json(ranking);
   } catch (error) {
     console.error('Error:', error);
