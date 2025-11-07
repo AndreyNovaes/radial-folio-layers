@@ -17,8 +17,8 @@ export const SkillsEvolutionRadar = ({
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
   const selectedYear: YearType = "2025";
 
-  const centerX = 350;
-  const centerY = 350;
+  const centerX = 400;
+  const centerY = 400;
   const maxRadius = 220;
   const minRadius = 40;
 
@@ -59,7 +59,7 @@ export const SkillsEvolutionRadar = ({
     <>
       {/* SVG Radar Chart */}
       <div className="relative w-full aspect-square max-w-[700px] mx-auto">
-        <svg viewBox="0 0 700 700" className="w-full h-full">
+        <svg viewBox="0 0 800 800" className="w-full h-full">
           <defs>
             <radialGradient id="radarGlow" cx="50%" cy="50%">
               <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.15" />
