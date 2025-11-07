@@ -17,9 +17,9 @@ export const SkillsEvolutionRadar = ({
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
   const selectedYear: YearType = "2025";
 
-  const centerX = 300;
-  const centerY = 300;
-  const maxRadius = 200;
+  const centerX = 350;
+  const centerY = 350;
+  const maxRadius = 220;
   const minRadius = 40;
 
   // Responsive font size based on viewport
@@ -59,7 +59,7 @@ export const SkillsEvolutionRadar = ({
     <>
       {/* SVG Radar Chart */}
       <div className="relative w-full aspect-square max-w-[700px] mx-auto">
-        <svg viewBox="0 0 600 600" className="w-full h-full">
+        <svg viewBox="0 0 700 700" className="w-full h-full">
           <defs>
             <radialGradient id="radarGlow" cx="50%" cy="50%">
               <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.15" />
@@ -163,7 +163,7 @@ export const SkillsEvolutionRadar = ({
           {/* Data points and labels */}
           {currentPoints.map((point, index) => {
             const isHovered = hoveredSkill === point.skill.label;
-            const labelRadius = maxRadius + 40;
+            const labelRadius = maxRadius + 50;
             const labelX = centerX + labelRadius * Math.cos(point.angle);
             const labelY = centerY + labelRadius * Math.sin(point.angle);
             
