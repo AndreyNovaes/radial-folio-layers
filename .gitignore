@@ -6,8 +6,17 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+
+# Environment
 .env
+.env.local
+
+# Documentation (removed from repo)
 .claude
+
+# Build/Analysis Tools
+repomix-output.xml
+*.repomix.*
 
 node_modules
 dist
